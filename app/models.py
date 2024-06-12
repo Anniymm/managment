@@ -35,8 +35,8 @@ class Task(models.Model):  # proeqtshi arsebuli konkretuli davaleba
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
     task_name = models.CharField(max_length=200)
     description = models.TextField()
-    start_date = models.DateTimeField(timezone.now())
-    end_date = models.DateTimeField()
+    # start_date = models.DateTimeField(timezone.now())
+    # end_date = models.DateTimeField()
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('in_progress', 'In Progress'), ('completed', 'Completed')])
 
     def __str__(self):
