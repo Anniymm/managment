@@ -2,9 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
-class User(AbstractUser): # registraciistvis
-    is_customer = models.BooleanField(default=False)
-    is_contractor = models.BooleanField(default=False)
+class User(AbstractUser): 
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_user_set',
@@ -25,8 +23,8 @@ class Project(models.Model):
     description = models.TextField()
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_projects')
-    contractor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contractor_projects')
+    # customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_projects')
+    # contractor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contractor_projects')
 
     def __str__(self):
         return self.name
@@ -54,3 +52,5 @@ class Timer(models.Model):
     contractor_time = models.DurationField(default=0)
     last_switched = models.DateTimeField(auto_now=True)
     current_responsible = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='current_timers')
+
+# kavshirebi invited peoplebtan !!!!

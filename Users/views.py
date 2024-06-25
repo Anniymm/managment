@@ -8,18 +8,18 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer, LoginSerializer, PersonalSpaceSerializer
 from .models import PersonalSpace
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import PermissionDenied
+
+# {"username":"username", "password":"password"}
 
 User = get_user_model()
-
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny] # yvelas sheedzlos registracia
 
-# {"username":"anano", "password":"kapanadze"}
 
-class LoginView(APIView):
+class LoginView(APIView):         #redirectebis damateba
     permission_classes = [AllowAny] # yvelas sheedzlos login
 
     def post(self, request):
@@ -32,9 +32,11 @@ class LoginView(APIView):
             if user is not None: 
                 #useris avtomaturad shesvlistvis
                 refresh = RefreshToken.for_user(user)
+                user_data = UserSerializer(user).data
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
+                    'user': user_data
                 }, status=status.HTTP_200_OK)
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED) 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
@@ -44,7 +46,7 @@ class LogoutView(APIView):
         logout(request)
         return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
-#dasatesti class
+#dasatesti class permissionebistvis-backistvis
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -53,7 +55,7 @@ class ProtectedView(APIView):
     
 
 class PersonalSpaceView(generics.RetrieveUpdateAPIView):
-    queryset = PersonalSpace.objects.all()
+    # queryset = PersonalSpace.objects.all()
     serializer_class = PersonalSpaceSerializer
     permission_classes = [IsAuthenticated]
 
@@ -66,13 +68,13 @@ class PersonalSpaceView(generics.RetrieveUpdateAPIView):
         except PersonalSpace.DoesNotExist:
             raise PermissionDenied("Personal space does not exist for this user.")
 
-    def post(self, request, *args, **kwargs):
-        # Check if personal space already exists for the user
-        if hasattr(self.request.user, 'personal_space'):
-            raise PermissionDenied("Personal space already exists for this user.")
+    # def post(self, request, *args, **kwargs):
+    #     # shevamowmot tu arsebobs personal space
+    #     # if hasattr(self.request.user, 'personal_space'):
+    #     #     raise PermissionDenied("Personal space already exists for this user.")
 
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user)
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save(user=self.request.user)    
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
