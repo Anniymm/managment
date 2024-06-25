@@ -60,13 +60,15 @@ class PersonalSpaceView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        user = self.request.user
-        if not user.is_authenticated:
-            raise PermissionDenied("User must be logged in to access personal space.")
-        try:
-            return user.personal_space
-        except PersonalSpace.DoesNotExist:
-            raise PermissionDenied("Personal space does not exist for this user.")
+        return self.request.user.personal_space
+
+    #     user = self.request.user
+    #     if not user.is_authenticated:
+    #         raise PermissionDenied("User must be logged in to access personal space.")
+    #     try:
+    #         return user.personal_space
+    #     except PersonalSpace.DoesNotExist:
+    #         raise PermissionDenied("Personal space does not exist for this user.")
 
     # def post(self, request, *args, **kwargs):
     #     # shevamowmot tu arsebobs personal space

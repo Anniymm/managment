@@ -124,6 +124,6 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10), #dro unda shevcvalo
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30), #dro unda shevcvalo
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2)
 }
