@@ -9,7 +9,6 @@ from .serializers import UserSerializer, LoginSerializer, PersonalSpaceSerialize
 from .models import PersonalSpace
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
-
 # {"username":"username", "password":"password"}
 
 User = get_user_model()
@@ -17,7 +16,10 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny] # yvelas sheedzlos registracia
+    '''
+    davamato funqciebi, rogorc login-shi maqvs , rom registraciis merec chaitvalos avtorizirebulad, tu ara ase davtovo ))))
 
+    '''
 
 class LoginView(APIView):         #redirectebis damateba
     permission_classes = [AllowAny] # yvelas sheedzlos login
@@ -62,6 +64,8 @@ class PersonalSpaceView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user.personal_space
 
+
+
     #     user = self.request.user
     #     if not user.is_authenticated:
     #         raise PermissionDenied("User must be logged in to access personal space.")
@@ -77,6 +81,6 @@ class PersonalSpaceView(generics.RetrieveUpdateAPIView):
 
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(user=self.request.user)    
+    #     serializer.save(user=self.request.user)
 
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)

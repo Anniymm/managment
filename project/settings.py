@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'app',
     'Users',
+    'drf_spectacular',
 
 ]
 
@@ -119,6 +120,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',   # api-documentaion
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your API',
+    'DESCRIPTION': 'API documentation for my project.(Must be added)',
+    'VERSION': '1.0.0',
+    # damateba, maxasiateblebis shesabamisad
 }
 
 from datetime import timedelta
